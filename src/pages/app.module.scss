@@ -1,0 +1,131 @@
+@import "src/styles/scss/functions";
+@import "src/styles/scss/mixins";
+@import "src/styles/scss/variables";
+
+/* ---------------------------------------- */
+/*                   _app                   */
+/* ---------------------------------------- */
+
+.page-container {
+  @include full-height-limited;
+  overflow-y: auto;
+   background: rgb(0, 0, 0);
+   background: linear-gradient(90deg, rgba(0, 0, 0, 1) 16%, rgba(222, 10, 10, 1) 177%, rgba(60, 121, 9, 1) 200%);
+}
+
+.progress-container {
+  @include full-height;
+}
+
+/* ---------------------------------------- */
+/*                   index                  */
+/* ---------------------------------------- */
+
+.stepper-container {
+  padding: 0px spacing(3);
+}
+
+.main-grid {
+  @include full-height;
+}
+
+.pages {
+  &--accordion {
+    width: 150pt;
+  }
+  &--accordion-active {
+    background: #dc1c49 !important;
+  }
+}
+.--accordion {
+  width: 150pt;
+  background: #dc1c49 !important;
+  p{
+    color: #fff !important
+  }
+}
+.--accordion-details {
+  flex-direction: column;
+  padding: 0 !important;
+}
+.--accordion-child {
+  background-color: unset !important;
+  box-shadow: unset !important;
+}
+.--accordion-active {
+  background: #ddd !important;
+  p{
+    color: #000 !important
+  }
+}
+
+.dx-datagrid{
+  padding: 10px !important;
+}
+
+.labelIcon {
+  @include flex-row-center;
+  padding: spacing(2);
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.completedLabelIcon,
+.activeLabelIcon {
+  border-color: $primary-light;
+  background-color: $primary-light;
+  color: #ffffff;
+}
+
+.completedLabelIcon {
+  box-shadow: none;
+}
+
+.activeLabelIcon {
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.connectorAlternativeLabel {
+  @include full-width;
+  position: absolute;
+  top: 30%;
+  right: -50%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: 0;
+
+  & * {
+    border: none;
+  }
+}
+
+.activeConnector,
+.completedConnector {
+  background-color: $primary-light;
+}
+
+.stepper {
+  @include full-width;
+  @include no-bg;
+  padding: spacing(2) 0px !important;
+}
+
+@media only screen and (max-width: $breakpoint-sm) {
+  .steps {
+    &-grid {
+      height: auto !important;
+    }
+  }
+}
+
+@media only print {
+  .page-container {
+    padding: 0px !important;
+  }
+  button,
+  .stepper {
+    display: none !important;
+  }
+}

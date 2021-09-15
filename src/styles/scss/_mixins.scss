@@ -1,0 +1,511 @@
+@import "./functions";
+@import "./variables";
+
+@mixin border-radius(
+  $top-left: $border-radius,
+  $top-right: $border-radius,
+  $bottom-right: $border-radius,
+  $bottom-left: $border-radius
+) {
+  -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left !important;
+  -moz-border-radius: $top-left $top-right $bottom-right $bottom-left !important;
+  -ms-border-radius: $top-left $top-right $bottom-right $bottom-left !important;
+  -o-border-radius: $top-left $top-right $bottom-right $bottom-left !important;
+  border-radius: $top-left $top-right $bottom-right $bottom-left !important;
+}
+
+@mixin transition($property: all, $duration: $transition-duration, $ease: $transition-ease){
+  -webkit-transition: $property $duration $ease;
+  -o-transition: $property $duration $ease;
+  transition: $property $duration $ease;
+}
+
+@mixin transform($transform-functions){
+  -webkit-transform: $transform-functions;
+  -ms-transform: $transform-functions;
+  transform: $transform-functions;
+}
+
+@mixin linear-gradient($direction, $gradients...) {
+  background-color: nth($gradients, 1);
+  background-image: -webkit-gradient(linear, $direction, from(nth($gradients, 1)), to(nth($gradients, -1)));
+  background-image: -o-linear-gradient($direction, $gradients...);
+  background-image: linear-gradient($direction, $gradients...);
+}
+
+@mixin box-shadow($left, $top, $radius, $color) {
+  -webkit-box-shadow: $left $top $radius $color !important;
+  box-shadow: $left $top $radius $color !important;
+}
+
+@mixin animation(
+  $name,
+  $duration: $animation-duration,
+  $timing-function: $animation-timing-function,
+  $direction: $animation-direction,
+  $iteration-count: $animation-iteration-count
+) {
+  @if $name == none {
+    -webkit-animation: none;
+    animation: none;
+  } @else {
+    -webkit-animation: $name $duration $timing-function $direction $iteration-count;
+    animation: $name $duration $timing-function $direction $iteration-count;
+  }
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} { @content; }
+  @-moz-keyframes #{$name} { @content; }
+  @keyframes #{$name} { @content; }
+}
+
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs) { @content; }
+  } @else if $breakpoint == sm-310 {
+    @media (max-width: $breakpoint-sm-310) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md-850 {
+    @media (max-width: $breakpoint-md-850) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl-1600 {
+    @media (max-width: $breakpoint-xl-1600) { @content; }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) { @content; }
+  } @else {
+    @warn "Breakpoint mixin supports: xs, sm, md-850, md, lg, xl";
+  }
+}
+
+@mixin size($size...) {
+  $height: nth($size, 1);
+  $width: $height;
+  @if length($size) > 1 {
+    $height: nth($size, 2);
+  }
+  width: $width !important;
+  height: $height !important;
+}
+
+@mixin set-width($size) {
+  width: $size !important;
+  min-width: $size !important;
+}
+
+@mixin set-width-limited($size) {
+  @include set-width($size);
+  max-width: $size !important;
+}
+
+@mixin set-height($size) {
+  height: $size !important;
+  min-height: $size !important;
+}
+
+@mixin set-height-limited($size) {
+  @include set-height($size);
+  max-height: $size !important;
+}
+
+@mixin full-width {
+  @include set-width(100%);
+}
+
+@mixin full-width-limited {
+  @include set-width-limited(100%);
+}
+
+@mixin full-height {
+  @include set-height(100%);
+}
+
+@mixin full-height-limited {
+  @include set-height-limited(100%);
+}
+
+@mixin text-overflow($value) {
+  -o-text-overflow: $value;
+  text-overflow: $value;
+}
+
+@mixin no-overflow {
+  @include text-overflow(ellipsis);
+  overflow: hidden;
+}
+
+@mixin list {
+  list-style-type: none;
+  & li {
+    display: inline !important;
+  }
+}
+
+@mixin no-bg {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+@mixin text-nowrap {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+@mixin text-wrap {
+  white-space: pre-wrap;
+  word-break:  break-word;
+}
+
+@mixin disabled {
+  -webkit-filter: grayscale(1) opacity(0.3);
+  filter: grayscale(1) opacity(0.3);
+}
+
+@mixin base-shadow {
+  @include box-shadow(-4px, 4px, 5px, rgba($grey-800, 0.05));
+}
+
+@mixin not-clickable {
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+}
+
+@mixin base-input {
+  @include border-radius;
+  & input, textarea {
+    z-index: $z-index-text-field-input;
+  }
+  & p {
+    z-index: $z-index-text-field-p;
+  }
+  & fieldset {
+    @include border-radius;
+    background-color: white;
+    z-index: $z-index-text-field-fieldset;
+  }
+  & svg {
+    margin: 0px spacing(0.5);
+    color: $grey-400;
+    z-index: $z-index-text-field-svg;
+  }
+}
+
+@mixin base-btn {
+  @include border-radius;
+  padding: spacing(1.5) spacing(3) !important;
+  &-disabled {
+    @include not-clickable;
+    box-shadow: none !important;
+    background-color: $grey-200 !important;
+    border: 1px solid rgba($grey-400, 0.7) !important;
+    & * {
+      color: $grey-500 !important;
+    }
+    &:hover {
+      background-color: $grey-200 !important;
+    }
+  }
+  &-small, &-medium {
+    padding: spacing(1) spacing(1.5) !important;
+  }
+  &-small {
+    & * {
+      font-size: pxToRem(13) !important;
+    }
+  }
+}
+
+@mixin primary-btn {
+  @include box-shadow(0px, 0px, 10px, rgba($primary-main, 0.4));
+  background-color: $primary-main !important;
+  & * {
+    color: #ffffff !important;
+  }
+  &-active {
+    @include not-clickable;
+  }
+  &:hover, &-active {
+    background-color: $primary-light !important;
+  }
+}
+
+@mixin secondary-btn {
+  @include box-shadow(0px, 0px, 10px, rgba($secondary-dark, 0.4));
+  background-color: $secondary-dark !important;
+  & * {
+    color: #ffffff !important;
+  }
+  &-active {
+    @include not-clickable;
+  }
+  &:hover, &-active {
+    background-color: $secondary-main !important;
+  }
+}
+
+/* ---------------------------------------- */
+/*             padding | margin             */
+/* ---------------------------------------- */
+
+@mixin make-spaces($space-prefixes, $max, $step) {
+  @each $attr-short, $attr-long in $space-prefixes {
+    @for $i from 1 through ceil(($max + $step)/$step) {
+      $value: ($i - 1) * $step + 1;
+      .#{$attr-short}#{$value - 1} {
+        #{$attr-long}: #{$value - 1}#{"px"} !important;
+      }
+    }
+  }
+}
+
+@mixin no-space {
+  margin: 0px;
+  padding: 0px;
+}
+
+@mixin no-space-strict {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+@mixin base-section-padding($right-left-padding: 0px) {
+  padding: spacing(5) $right-left-padding spacing(4) !important;
+}
+
+@mixin base-container-margin {
+  margin: spacing(5) 0px spacing(4) !important;
+}
+
+/* ---------------------------------------- */
+/*                   flex                   */
+/* ---------------------------------------- */
+
+@mixin flex-basis($value) {
+  flex-basis: #{$value}#{"%"} !important;
+  max-width: #{$value}#{"%"} !important;
+}
+
+@mixin make-flex-containers($flex-directions, $alignments) {
+  @each $direction in $flex-directions {
+    @each $alignment in $alignments {
+      .flex-#{$direction}-#{$alignment} {
+        @include flex;
+        @include flex-align($alignment, $alignment, $alignment, $alignment);
+        @if $direction == row {
+          @include flex-row;
+        } @else if $direction == row-reverse {
+          @include flex-row-reverse;
+        } @else if $direction == column {
+          @include flex-column;
+        } @else if $direction == column {
+          @include flex-column-reverse;
+        }
+      }
+    }
+  }
+}
+
+@mixin make-flex-basis($max, $step) {
+  @for $i from 1 through ceil(($max + $step)/$step) {
+    $value: ($i - 1) * $step + 1;
+    .flex-basis-#{$value - 1} {
+      @include flex-basis($value - 1);
+    }
+  }
+}
+
+@mixin prefix-justify-content($alignment) {
+  @if $alignment == flex-start {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+  } @else if $alignment == flex-end {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+  } @else {
+    -webkit-box-pack: $alignment;
+    -ms-flex-pack: $alignment;
+  }
+  justify-content: $alignment;
+}
+
+@mixin prefix-align-items($alignment) {
+  @if $alignment == flex-start {
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+  } @else if $alignment == flex-end {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+  } @else {
+    -webkit-box-align: $alignment;
+    -ms-flex-align: $alignment;
+  }
+  align-items: $alignment;
+}
+
+@mixin prefix-align-content($alignment) {
+  @if $alignment == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $alignment == flex-end {
+    -ms-flex-line-pack: end;
+  } @else {
+    -ms-flex-line-pack: $alignment;
+  }
+  align-content: $alignment;
+}
+
+@mixin flex-align($justify-items, $justify-content, $align-items, $align-content) {
+  @include prefix-justify-content($justify-content);
+  @include prefix-align-items($align-items);
+  @include prefix-align-content($align-content);
+  justify-items: $justify-items;
+}
+
+@mixin flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin flex-nowrap {
+  -webkit-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -o-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+@mixin flex-row {
+  @include flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+@mixin flex-row-reverse {
+  @include flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+@mixin flex-column {
+  @include flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@mixin flex-column-reverse {
+  @include flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+@mixin flex-row-center {
+  @include flex-row;
+  @include flex-align(center, center, center, center);
+}
+
+@mixin flex-row-space-between {
+  @include flex-row;
+  @include flex-align(space-between, space-between, space-between, space-between);
+}
+
+@mixin flex-row-space-around {
+  @include flex-row;
+  @include flex-align(space-around, space-around, space-around, space-around);
+}
+
+@mixin flex-row-flex-start {
+  @include flex-row;
+  @include flex-align(flex-start, flex-start, flex-start, flex-start);
+}
+
+@mixin flex-row-flex-end {
+  @include flex-row;
+  @include flex-align(flex-end, flex-end, flex-end, flex-end);
+}
+
+@mixin flex-row-reverse-center {
+  @include flex-row-reverse;
+  @include flex-align(center, center, center, center);
+}
+
+@mixin flex-row-reverse-space-between {
+  @include flex-row-reverse;
+  @include flex-align(space-between, space-between, space-between, space-between);
+}
+
+@mixin flex-row-reverse-space-around {
+  @include flex-row-reverse;
+  @include flex-align(space-around, space-around, space-around, space-around);
+}
+
+@mixin flex-row-reverse-flex-start {
+  @include flex-row-reverse;
+  @include flex-align(flex-start, flex-start, flex-start, flex-start);
+}
+
+@mixin flex-row-reverse-flex-end {
+  @include flex-row-reverse;
+  @include flex-align(flex-end, flex-end, flex-end, flex-end);
+}
+
+@mixin flex-column-center {
+  @include flex-column;
+  @include flex-align(center, center, center, center);
+}
+
+@mixin flex-column-space-between {
+  @include flex-column;
+  @include flex-align(space-between, space-between, space-between, space-between);
+}
+
+@mixin flex-column-space-around {
+  @include flex-column;
+  @include flex-align(space-around, space-around, space-around, space-around);
+}
+
+@mixin flex-column-flex-start {
+  @include flex-column;
+  @include flex-align(flex-start, flex-start, flex-start, flex-start);
+}
+
+@mixin flex-column-flex-end {
+  @include flex-column;
+  @include flex-align(flex-end, flex-end, flex-end, flex-end);
+}
+
+@mixin flex-column-reverse-center {
+  @include flex-column-reverse;
+  @include flex-align(center, center, center, center);
+}
+
+@mixin flex-column-reverse-space-between {
+  @include flex-column-reverse;
+  @include flex-align(space-between, space-between, space-between, space-between);
+}
+
+@mixin flex-column-reverse-space-around {
+  @include flex-column-reverse;
+  @include flex-align(space-around, space-around, space-around, space-around);
+}
+
+@mixin flex-column-reverse-flex-start {
+  @include flex-column-reverse;
+  @include flex-align(flex-start, flex-start, flex-start, flex-start);
+}
+
+@mixin flex-column-reverse-flex-end {
+  @include flex-column-reverse;
+  @include flex-align(flex-end, flex-end, flex-end, flex-end);
+}

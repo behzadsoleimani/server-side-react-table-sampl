@@ -1,0 +1,11 @@
+@function pxToRem($size: number) {
+  @return (($size * 1px) / 16px) * 1rem;
+}
+
+@function spacing($size: number, $negative: boolean) {
+  @if $negative == true {
+    @return -1 * $size * 10px;
+  } @else {
+    @return $size * 10px;
+  }
+}
