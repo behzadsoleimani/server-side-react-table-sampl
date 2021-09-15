@@ -1,0 +1,44 @@
+@import "src/styles/scss/functions";
+@import "src/styles/scss/mixins";
+
+.dx-datagrid{
+  padding: 10px !important;
+}
+
+.table {
+  width: 100%;
+  max-width: unset !important;
+  height: 100%;
+
+  // & table {
+  //   table-layout: auto !important;
+  // }
+  & div.dx-datagrid{
+    padding: 10px !important;
+  }
+  & div.dx-datagrid-headers {
+
+    & tr.dx-header-row>td {
+      text-align: center !important;
+    }
+
+    & tr.dx-datagrid-filter-row>td {
+
+      padding-left: spacing(0.5) !important;
+      padding-right: spacing(0.25) !important;
+
+      & div.dx-menu-horizontal>ul>li>div {
+        border-radius: 0px;
+        padding: 0px spacing(0.25);
+      }
+
+      & input.dx-texteditor-input {
+        font-family: iranyekan !important;
+        padding-left: 0px !important;
+      }
+
+    }
+
+  }
+
+}
