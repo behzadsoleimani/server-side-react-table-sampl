@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "outDir": "build/",
+    "module": "esnext",
+    "target": "es5",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "configFile": "./tslint.json",
+        "suppressWhileTypeErrorsPresent": false,
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true
+      }
+    ],
+    "sourceMap": false,
+    "allowJs": false,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "webpack",
+    "jest",
+    "build",
+    "commands"
+  ],
+  "include": [
+    "src"
+  ]
+}
