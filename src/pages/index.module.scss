@@ -1,0 +1,30 @@
+@import "src/styles/scss/functions";
+@import "src/styles/scss/mixins";
+@import "src/styles/scss/variables";
+
+.dashboard-paper {
+  @include full-width;
+  @include full-height-limited;
+  position: relative;
+}
+
+.tooltip {
+  padding: spacing(0.5);
+  &-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+  }
+}
+
+.cancel-btn {
+  @include full-width;
+  font-size: pxToRem(22) !important;
+  color: #000 !important;
+  padding: spacing(0.5) spacing(1) !important;
+}
+
+.table-dialog{
+  max-width: unset !important;
+}
